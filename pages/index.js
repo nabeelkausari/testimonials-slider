@@ -1,103 +1,24 @@
 import Head from 'next/head'
-import { useState } from "react";
+import { useState, useRef } from "react";
 
-const Home = () => {
-  const [slide, setSlide] = useState(0);
-  const slides = [
-    {
-      id: 1,
-      quote: `“ I’ve been interested in coding for a while but never taken the jump, until now.
-                I couldn’t recommend this course enough. I’m now in the job of my dreams and so
-                excited about the future. ”`,
-      name: "Tanya Sinclair",
-      designation: "UX Engineer",
-      image: "/image-tanya.jpg"
-    },
-    {
-      id: 2,
-      quote: `“ If you want to lay the best foundation possible I’d recommend taking this course.
-        The depth the instructors go into is incredible. I now feel so confident about
-        starting up as a professional developer. ”`,
-      name: "John Tarkpor",
-      designation: "Junior Front-end Developer",
-      image: "/image-john.jpg"
-    }
-  ];
-  const handlePrevSlide = () => {
-    if (slide === 0) return
-    setSlide(slide - 1);
-  }
-
-  const handleNextSlide = () => {
-    if (slide === slides.length - 1) return
-    setSlide(slide + 1);
-  }
-  return (
-    <div className="container">
-      <Head>
-        <title>Frontend Mentor | Coding Bootcamp Testimonials Slider</title>
-        <link rel="icon" href="/favicon-32x32.png" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet" />
-      </Head>
-
-      <main>
-        <div className="slide-holder">
-          <div className="slide">
-            <div className="left">
-              <p className="content">
-                {slides[slide].quote}
-              </p>
-              <h5 className="author">{slides[slide].name} <span className="designation">{slides[slide].designation}</span></h5>
-            </div>
-            <div className="right">
-              <img className="person-img" alt={slides[slide].name} src={slides[slide].image} />
-            </div>
-          </div>
-          <div className="nav">
-            <button onClick={handlePrevSlide} className="prev"><img alt="Prev" src="/icon-prev.svg"/></button>
-            <button onClick={handleNextSlide} className="next"><img alt="Next" src="/icon-next.svg"/></button>
-          </div>
-        </div>
-
-      </main>
-
-      {/*<footer>*/}
-      {/*  <div className="attribution">*/}
-      {/*    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.*/}
-      {/*    Coded by <a href="#">Nabeel Kausari</a>.*/}
-      {/*  </div>*/}
-      {/*</footer>*/}
-
-      <style jsx>{`
-
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-    
-    main {
-      height: 100%;
-      background-image: url("/pattern-curve.svg");
-      background-repeat: no-repeat;
-      background-position: left bottom;
-      display: flex;
-      justify-content: center;
-    }
-    
-    .slide-holder {
-      position: relative;
-      width: 1295px;
-      height: 660px;
-      background-image: url("/pattern-bg.svg");
-      background-repeat: no-repeat;
-      background-position: right top;
-      background-size: contain;
-      margin-top: 50px;
-    }
-    
+const Slide = ({slide}) => (
+  <div id={`slide-${slide.id}`} className="slide">
+    <div className="left">
+      <p className="content">
+        {slide.quote}
+      </p>
+      <h5 className="author">{slide.name} <span className="designation">{slide.designation}</span></h5>
+    </div>
+    <div className="right">
+      <img className="person-img" alt={slide.name} src={slide.image} />
+    </div>
+    <style jsx>
+      {`
     .slide {
       position: relative;
-      width: 1110px;
+      min-width: 1110px;
       height: 75vh;
-      margin: 0 auto;
+      margin: 0 10%;
       display: flex;
       flex-direction: row;
     }
@@ -152,11 +73,106 @@ const Home = () => {
       margin-top: 2px;
       box-shadow: 0 30px 30px rgba(0,0,0,.1);
      }
+      `}
+    </style>
+  </div>
+)
+
+const Home = () => {
+  const [slide, setSlide] = useState(0);
+  const sliderRef = useRef(null);
+  const slideWidth = 1295;
+  const slides = [
+    {
+      id: 1,
+      quote: `“ I’ve been interested in coding for a while but never taken the jump, until now.
+                I couldn’t recommend this course enough. I’m now in the job of my dreams and so
+                excited about the future. ”`,
+      name: "Tanya Sinclair",
+      designation: "UX Engineer",
+      image: "/image-tanya.jpg"
+    },
+    {
+      id: 2,
+      quote: `“ If you want to lay the best foundation possible I’d recommend taking this course.
+        The depth the instructors go into is incredible. I now feel so confident about
+        starting up as a professional developer. ”`,
+      name: "John Tarkpor",
+      designation: "Junior Front-end Developer",
+      image: "/image-john.jpg"
+    }
+  ];
+  const handlePrevSlide = () => {
+    if (slide === 0) return
+    const updatedSlide = slide - 1;
+    setSlide(updatedSlide);
+    sliderRef.current.scrollLeft = slideWidth * updatedSlide
+  }
+
+  const handleNextSlide = () => {
+    if (slide === slides.length - 1) return
+    const updatedSlide = slide + 1;
+    setSlide(updatedSlide);
+    sliderRef.current.scrollLeft = slideWidth * updatedSlide
+  }
+  return (
+    <div className="container">
+      <Head>
+        <title>Frontend Mentor | Coding Bootcamp Testimonials Slider</title>
+        <link rel="icon" href="/favicon-32x32.png" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet" />
+      </Head>
+
+      <main>
+        <div ref={sliderRef} className="slide-holder">
+          {slides.map(slide => <Slide key={slide.id} slide={slide}/>)}
+          <div className="nav">
+            <button onClick={handlePrevSlide} className="prev"><img alt="Prev" src="/icon-prev.svg"/></button>
+            <button onClick={handleNextSlide} className="next"><img alt="Next" src="/icon-next.svg"/></button>
+          </div>
+        </div>
+
+      </main>
+
+      {/*<footer>*/}
+      {/*  <div className="attribution">*/}
+      {/*    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.*/}
+      {/*    Coded by <a href="#">Nabeel Kausari</a>.*/}
+      {/*  </div>*/}
+      {/*</footer>*/}
+
+      <style jsx>{`
+
+    .attribution { font-size: 11px; text-align: center; }
+    .attribution a { color: hsl(228, 45%, 44%); }
+    
+    main {
+      height: 100%;
+      background-image: url("/pattern-curve.svg");
+      background-repeat: no-repeat;
+      background-position: left bottom;
+      display: flex;
+      justify-content: center;
+    }
+    
+    .slide-holder {
+      position: relative;
+      width: 1295px;
+      height: 660px;
+      background-image: url("/pattern-bg.svg");
+      background-repeat: no-repeat;
+      background-position: right top;
+      background-size: contain;
+      margin-top: 50px;
+      display: flex;
+      flex-direction: row;
+      overflow-x: scroll;
+    }
      
      .nav {
-       position: absolute;
-       bottom: 30px;
-       left: 722px;
+       position: fixed;
+       bottom: 100px;
+       right: 450px;
      }
      
      .nav button {
@@ -196,6 +212,9 @@ const Home = () => {
     `}</style>
 
       <style jsx global>{`
+      html {
+      scroll-behavior: smooth;
+      }
       html,
       body {
         padding: 0;

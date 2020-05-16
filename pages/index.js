@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Slide = ({ slide, cn, innerWidth }) => (
   <div className={`slide animate ${cn}`}>
@@ -57,7 +57,7 @@ const Slide = ({ slide, cn, innerWidth }) => (
      
     .slide {
       position: relative;
-      width: 1110px;
+      min-width: 1110px;
       height: 75vh;
       margin: 0 auto;
       display: flex;
@@ -73,9 +73,62 @@ const Slide = ({ slide, cn, innerWidth }) => (
      .person-img {
       margin-top: 2px;
       box-shadow: 0 30px 30px rgba(0,0,0,.1);
+      border-radius: 5px;
      }
      
+     .animate {
+        transition: .5s all;
+      }
+      
+      .hidden {
+          display: none;
+        }
+        
+       .move-out-left {
+          transform: translate(-120%);
+        }
+        
+        .move-out-right {
+          transform: translate(120%);
+        }
+        
+        .stay-out-right {
+          transform: translate(120%);
+        }
+        
+        .stay-out-left {
+          transform: translate(-120%);
+        }
+      
+        .move-in-right {
+          transform: translate(0);
+        }
+      
+        .move-in-left {
+          transform: translate(-100%);
+        }
+        
+     
      @media (max-width: 425px) {
+      .slide {
+          flex-direction: column-reverse;
+          min-width: ${innerWidth}px;
+          height: max-content;
+        }
+        
+        .right {
+          width: 100%;
+          flex: 1;
+         position: relative;
+         display: flex;
+         padding: 10px;
+        }
+        
+        .person-img {
+          width: 77%;
+          margin: 20px auto;
+         
+        }
           .left {
         width: 100%;
           flex: 1;
@@ -107,58 +160,6 @@ const Slide = ({ slide, cn, innerWidth }) => (
           display: block;
           margin-left: 0;
         }
-        
-      .slide {
-          flex-direction: column-reverse;
-          min-width: ${innerWidth}px;
-          height: max-content;
-        }
-        
-        .right {
-          width: 100%;
-          flex: 1;
-         position: relative;
-         display: flex;
-         padding: 10px;
-        }
-        
-        .person-img {
-          border-radius: 5px;
-          width: 77%;
-          margin: 20px auto;
-         
-        }
-        
-        .animate {
-          transition: .2s all;
-        }
-        
-        .move-out-left {
-          transform: translate(-120%);
-        }
-        
-        .move-out-right {
-          transform: translate(120%);
-        }
-        
-        .stay-out-right {
-          transform: translate(120%);
-        }
-        
-        .stay-out-left {
-          transform: translate(-120%);
-        }
-      
-        .move-in-right {
-          transform: translate(0);
-        }
-      
-        .move-in-left {
-          transform: translate(-100%);
-        }
-        .hidden {
-          display: none;
-        }
      }
 `}
     </style>
@@ -169,12 +170,11 @@ const Home = () => {
 
   const [slide, setSlide] = useState(0)
   const [innerWidth, setInnerWidth] = useState(300)
-  const [slidesOrder, setSlidesOrder] = useState({ prev: 0, next: 1});
   const [prevClass, setPrevClass] = useState("");
   const [nextClass, setNextClass] = useState("hidden");
+  const slidesOrder = { prev: 0, next: 1}
 
-  React.useEffect(() => {
-    console.log("setting innerWidth: ", window.innerWidth)
+  useEffect(() => {
     setInnerWidth(window.innerWidth - 20)
   }, []);
 
@@ -245,16 +245,14 @@ const Home = () => {
 
       </main>
 
-      {/*<footer>*/}
-      {/*  <div className="attribution">*/}
-      {/*    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.*/}
-      {/*    Coded by <a href="#">Nabeel Kausari</a>.*/}
-      {/*  </div>*/}
-      {/*</footer>*/}
+      <div className="attribution">
+        Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+        Coded by <a href="#">Nabeel Kausari</a>.
+      </div>
 
       <style jsx>{`
 
-    .attribution { font-size: 11px; text-align: center; }
+    .attribution { position: absolute; bottom: 10px; left: 10px; font-size: 11px; text-align: center; }
     .attribution a { color: hsl(228, 45%, 44%); }
     
     

@@ -281,7 +281,7 @@ const Home = () => {
      
      .nav {
        position: absolute;
-       top: 600px;
+       top: 580px;
        right: 35%;
        z-index: 10;
      }

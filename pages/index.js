@@ -1,111 +1,21 @@
 import Head from 'next/head'
 import { useState } from "react";
 
-const Home = () => {
-  const [slide, setSlide] = useState(0);
-  const slides = [
-    {
-      id: 1,
-      quote: `“ I’ve been interested in coding for a while but never taken the jump, until now.
-                I couldn’t recommend this course enough. I’m now in the job of my dreams and so
-                excited about the future. ”`,
-      name: "Tanya Sinclair",
-      designation: "UX Engineer",
-      image: "/image-tanya.jpg"
-    },
-    {
-      id: 2,
-      quote: `“ If you want to lay the best foundation possible I’d recommend taking this course.
-        The depth the instructors go into is incredible. I now feel so confident about
-        starting up as a professional developer. ”`,
-      name: "John Tarkpor",
-      designation: "Junior Front-end Developer",
-      image: "/image-john.jpg"
-    }
-  ];
-  const handlePrevSlide = () => {
-    if (slide === 0) return
-    setSlide(slide - 1);
-  }
+const Slide = ({ slide, cn, innerWidth }) => (
+  <div className={`slide animate ${cn}`}>
+    <div className="left">
+      <p className="content">
+        {slide.quote}
+      </p>
+      <h5 className="author">{slide.name} <span className="designation">{slide.designation}</span></h5>
+    </div>
+    <div className="right">
+      <img className="person-img" alt={slide.name} src={slide.image} />
+    </div>
+    <style jsx>
+      {`
 
-  const handleNextSlide = () => {
-    if (slide === slides.length - 1) return
-    setSlide(slide + 1);
-  }
-  return (
-    <div className="container">
-      <Head>
-        <title>Frontend Mentor | Coding Bootcamp Testimonials Slider</title>
-        <link rel="icon" href="/favicon-32x32.png" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet" />
-      </Head>
-
-      <main>
-        <div className="slide-holder">
-          <div className="slide">
-            <div className="left">
-              <p className="content">
-                {slides[slide].quote}
-              </p>
-              <h5 className="author">{slides[slide].name} <span className="designation">{slides[slide].designation}</span></h5>
-            </div>
-            <div className="right">
-              <img className="person-img" alt={slides[slide].name} src={slides[slide].image} />
-              <div className="nav">
-                <button onClick={handlePrevSlide} className="prev"><img alt="Prev" src="/icon-prev.svg"/></button>
-                <button onClick={handleNextSlide} className="next"><img alt="Next" src="/icon-next.svg"/></button>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </main>
-
-      {/*<footer>*/}
-      {/*  <div className="attribution">*/}
-      {/*    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.*/}
-      {/*    Coded by <a href="#">Nabeel Kausari</a>.*/}
-      {/*  </div>*/}
-      {/*</footer>*/}
-
-      <style jsx>{`
-
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-    
-    
-      
-    main {
-      height: 100%;
-      background-image: url("/pattern-curve.svg");
-      background-repeat: no-repeat;
-      background-position: left bottom;
-      display: flex;
-      justify-content: center;
-    }
-    
-    .slide-holder {
-      position: relative;
-      width: 1295px;
-      height: 660px;
-      background-image: url("/pattern-bg.svg");
-      background-repeat: no-repeat;
-      background-position: right top;
-      background-size: contain;
-      margin-top: 50px;
-    }
-    
-    .slide {
-      position: relative;
-      width: 1110px;
-      height: 75vh;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: row;
-    }
-    
-    .left {
+     .left {
         width: 650px;
         display: flex;
         flex-direction: column;
@@ -145,6 +55,15 @@ const Home = () => {
       margin-left: 3px;
      }
      
+    .slide {
+      position: relative;
+      width: 1110px;
+      height: 75vh;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: row;
+    }
+    
      .right {
       position: absolute;
       top: 10%;
@@ -156,10 +75,217 @@ const Home = () => {
       box-shadow: 0 30px 30px rgba(0,0,0,.1);
      }
      
+     @media (max-width: 600px) {
+          .left {
+        width: 100%;
+          flex: 1;
+          align-items: center;
+        }
+        
+        .content {
+          font-size: 19px;
+          margin-top: 50px;
+          text-align: center;
+          padding: 20px;
+        }
+        
+        .content:before {
+          width: 66px;
+          height: 55px;
+          top: -10px;
+          left: 50%;
+          transform: translate(-50%);
+        }
+        
+        .author {
+          font-size: 18px;
+          text-align: center;
+          margin-top: 0;
+        }
+        
+        .designation {
+          display: block;
+          margin-left: 0;
+        }
+        
+      .slide {
+          flex-direction: column-reverse;
+          min-width: ${innerWidth}px;
+          height: max-content;
+        }
+        
+        .right {
+          width: 100%;
+          flex: 1;
+         position: relative;
+         display: flex;
+         padding: 10px;
+        }
+        
+        .person-img {
+          border-radius: 5px;
+          width: 77%;
+          margin: 20px auto;
+         
+        }
+        
+        .animate {
+          transition: .2s all;
+        }
+        
+        .move-out-left {
+          transform: translate(-120%);
+        }
+        
+        .move-out-right {
+          transform: translate(120%);
+        }
+        
+        .stay-out-right {
+          transform: translate(120%);
+        }
+        
+        .stay-out-left {
+          transform: translate(-120%);
+        }
+      
+        .move-in-right {
+          transform: translate(0);
+        }
+      
+        .move-in-left {
+          transform: translate(-100%);
+        }
+        .hidden {
+          display: none;
+        }
+     }
+`}
+    </style>
+  </div>
+)
+
+const Home = () => {
+
+  const [slide, setSlide] = useState(0)
+  const [innerWidth, setInnerWidth] = useState(300)
+  const [slidesOrder, setSlidesOrder] = useState({ prev: 0, next: 1});
+  const [prevClass, setPrevClass] = useState("");
+  const [nextClass, setNextClass] = useState("hidden");
+
+  React.useEffect(() => {
+    console.log("setting innerWidth: ", window.innerWidth)
+    setInnerWidth(window.innerWidth - 20)
+  }, []);
+
+  const slides = [
+    {
+      id: 1,
+      quote: `“ I’ve been interested in coding for a while but never taken the jump, until now.
+                I couldn’t recommend this course enough. I’m now in the job of my dreams and so
+                excited about the future. ”`,
+      name: "Tanya Sinclair",
+      designation: "UX Engineer",
+      image: "/image-tanya.jpg"
+    },
+    {
+      id: 2,
+      quote: `“ If you want to lay the best foundation possible I’d recommend taking this course.
+        The depth the instructors go into is incredible. I now feel so confident about
+        starting up as a professional developer. ”`,
+      name: "John Tarkpor",
+      designation: "Junior Front-end Developer",
+      image: "/image-john.jpg"
+    }
+  ];
+
+  const handlePrevSlide = () => {
+    if (slide === 0) return;
+    setNextClass("move-out-right");
+    setPrevClass("stay-out-left");
+
+    setTimeout(() => {
+      setSlide(0);
+      setPrevClass("move-in-right");
+    }, 50);
+  }
+
+  const handleNextSlide = () => {
+    if (slide === 1) return;
+
+    setNextClass("stay-out-right");
+    setPrevClass("move-out-left");
+
+
+    setTimeout(() => {
+      setSlide(1);
+      setNextClass("move-in-left");
+    }, 50);
+  }
+
+  return (
+    <div className="container">
+      <Head>
+        <title>Frontend Mentor | Coding Bootcamp Testimonials Slider</title>
+        <link rel="icon" href="/favicon-32x32.png" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet" />
+      </Head>
+
+      <main>
+        <div className="slide-holder">
+          <Slide innerWidth={innerWidth} cn={prevClass} slide={slides[slidesOrder.prev]} />
+          <Slide innerWidth={innerWidth} cn={nextClass} slide={slides[slidesOrder.next]} />
+          <div className="nav">
+            <button onClick={handlePrevSlide} className="prev"><img alt="Prev" src="/icon-prev.svg"/></button>
+            <button onClick={handleNextSlide} className="next"><img alt="Next" src="/icon-next.svg"/></button>
+          </div>
+
+        </div>
+
+      </main>
+
+      {/*<footer>*/}
+      {/*  <div className="attribution">*/}
+      {/*    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.*/}
+      {/*    Coded by <a href="#">Nabeel Kausari</a>.*/}
+      {/*  </div>*/}
+      {/*</footer>*/}
+
+      <style jsx>{`
+
+    .attribution { font-size: 11px; text-align: center; }
+    .attribution a { color: hsl(228, 45%, 44%); }
+    
+    
+      
+    main {
+      height: 100%;
+      background-image: url("/pattern-curve.svg");
+      background-repeat: no-repeat;
+      background-position: left bottom;
+      display: flex;
+      justify-content: center;
+    }
+    
+    .slide-holder {
+      position: relative;
+      width: 1295px;
+      height: 660px;
+      background-image: url("/pattern-bg.svg");
+      background-repeat: no-repeat;
+      background-position: right top;
+      background-size: contain;
+      margin-top: 50px;
+      display: flex;
+      flex-direction: row;
+    }
+     
      .nav {
        position: absolute;
-       bottom: -25px;
-       left: 60px;
+       top: 600px;
+       right: 35%;
+       z-index: 10;
      }
      
      .nav button {
@@ -193,37 +319,18 @@ const Home = () => {
           background-size: 80%;
         }
         .slide-holder {
-          width: 100%;
-          height: 100%;
-          margin-top: 0;
+          min-width: ${innerWidth}px;
+          margin-top: 20px;
           padding: 15px;
           background-position: 40% 2%;
           background-size: 90%;
         }
-        .slide {
-          flex-direction: column-reverse;
-          width: 100%;
-          height: auto;
-        }
-        .left, .right {
-          width: 100%;
-          flex: 1;
-        }
-        .right {
-         position: relative;
-         display: flex;
-         padding: 10px;
-        }
-        
-        .person-img {
-          border-radius: 5px;
-          width: 80%;
-          margin: 20px auto;
-        }
         
         .nav {
           left: 50%;
-          bottom: 10px;
+          top: 315px;
+          width: 100%;
+          text-align: center;
           transform: translate(-50%);
         }
         
@@ -235,37 +342,6 @@ const Home = () => {
         .nav button img {
           width: 10px;
         }
-        
-        .left {
-          align-items: center;
-        }
-        
-        .content {
-          font-size: 19px;
-          margin-top: 50px;
-          text-align: center;
-          padding: 20px;
-        }
-        
-        .content:before {
-          width: 66px;
-          height: 55px;
-          top: -10px;
-          left: 50%;
-          transform: translate(-50%);
-        }
-        
-        .author {
-          font-size: 18px;
-          text-align: center;
-          margin-top: 0;
-        }
-        
-        .designation {
-          display: block;
-          margin-left: 0;
-        }
-        
       }
 
 
@@ -278,6 +354,7 @@ const Home = () => {
         padding: 0;
         margin: 0;
         font-family: 'Inter', sans-serif;
+        overflow: hidden;
       }
       
       html,body, #__next, .container {

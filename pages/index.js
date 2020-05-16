@@ -75,7 +75,7 @@ const Slide = ({ slide, cn, innerWidth }) => (
       box-shadow: 0 30px 30px rgba(0,0,0,.1);
      }
      
-     @media (max-width: 600px) {
+     @media (max-width: 425px) {
           .left {
         width: 100%;
           flex: 1;
@@ -314,7 +314,7 @@ const Home = () => {
         box-shadow: 5px 5px 10px rgba(0,0,0,.1);
      }
      
-    @media (max-width: 600px) {
+    @media (max-width: 425px) {
         main {
           background-size: 80%;
         }

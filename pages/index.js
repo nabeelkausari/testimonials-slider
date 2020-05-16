@@ -74,6 +74,8 @@ const Home = () => {
     .attribution { font-size: 11px; text-align: center; }
     .attribution a { color: hsl(228, 45%, 44%); }
     
+    
+      
     main {
       height: 100%;
       background-image: url("/pattern-curve.svg");
@@ -186,14 +188,88 @@ const Home = () => {
         box-shadow: 5px 5px 10px rgba(0,0,0,.1);
      }
      
-    
-
-      @media (max-width: 425px) {
-        .grid {
-          width: 100%;
-          flex-direction: column;
+    @media (max-width: 600px) {
+        main {
+          background-size: 80%;
         }
+        .slide-holder {
+          width: 100%;
+          height: 100%;
+          margin-top: 0;
+          padding: 15px;
+          background-position: 40% 2%;
+          background-size: 90%;
+        }
+        .slide {
+          flex-direction: column-reverse;
+          width: 100%;
+          height: auto;
+        }
+        .left, .right {
+          width: 100%;
+          flex: 1;
+        }
+        .right {
+         position: relative;
+         display: flex;
+         padding: 10px;
+        }
+        
+        .person-img {
+          border-radius: 5px;
+          width: 80%;
+          margin: 20px auto;
+        }
+        
+        .nav {
+          left: 50%;
+          bottom: 10px;
+          transform: translate(-50%);
+        }
+        
+        .nav button {
+          width: 45px;
+          padding: 13px 10px;
+        }
+        
+        .nav button img {
+          width: 10px;
+        }
+        
+        .left {
+          align-items: center;
+        }
+        
+        .content {
+          font-size: 19px;
+          margin-top: 50px;
+          text-align: center;
+          padding: 20px;
+        }
+        
+        .content:before {
+          width: 66px;
+          height: 55px;
+          top: -10px;
+          left: 50%;
+          transform: translate(-50%);
+        }
+        
+        .author {
+          font-size: 18px;
+          text-align: center;
+          margin-top: 0;
+        }
+        
+        .designation {
+          display: block;
+          margin-left: 0;
+        }
+        
       }
+
+
+      
     `}</style>
 
       <style jsx global>{`
@@ -211,6 +287,7 @@ const Home = () => {
       * {
         box-sizing: border-box;
       }
+      
     `}</style>
     </div>
   )

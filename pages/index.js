@@ -80,34 +80,26 @@ const Slide = ({ slide, cn, innerWidth }) => (
         transition: .5s all;
       }
       
-      .hidden {
-          display: none;
-        }
-        
-       .move-out-left {
-          transform: translate(-120%);
-        }
-        
-        .move-out-right {
-          transform: translate(120%);
-        }
-        
-        .stay-out-right {
-          transform: translate(120%);
-        }
-        
+        .move-out-left,
         .stay-out-left {
           transform: translate(-120%);
         }
+        
+        .move-out-right,
+        .stay-out-right {
+          transform: translate(120%);
+        }
       
         .move-in-right {
-          transform: translate(0);
+          transform: translate(10%);
         }
       
         .move-in-left {
-          transform: translate(-100%);
+          transform: translate(-90%);
         }
-        
+        .hidden {
+          display: none;
+        }
      
      @media (max-width: 425px) {
       .slide {
@@ -159,6 +151,14 @@ const Slide = ({ slide, cn, innerWidth }) => (
         .designation {
           display: block;
           margin-left: 0;
+        }
+      
+        .move-in-right {
+          transform: translate(0);
+        }
+      
+        .move-in-left {
+          transform: translate(-100%);
         }
      }
 `}
@@ -237,8 +237,8 @@ const Home = () => {
           <Slide innerWidth={innerWidth} cn={prevClass} slide={slides[slidesOrder.prev]} />
           <Slide innerWidth={innerWidth} cn={nextClass} slide={slides[slidesOrder.next]} />
           <div className="nav">
-            <button onClick={handlePrevSlide} className="prev"><img alt="Prev" src="/icon-prev.svg"/></button>
-            <button onClick={handleNextSlide} className="next"><img alt="Next" src="/icon-next.svg"/></button>
+            <button disabled={slide === 0} onClick={handlePrevSlide} className="prev"><img alt="Prev" src="/icon-prev.svg"/></button>
+            <button disabled={slide === 1} onClick={handleNextSlide} className="next"><img alt="Next" src="/icon-next.svg"/></button>
           </div>
 
         </div>
@@ -296,8 +296,12 @@ const Home = () => {
        transition: .5s all;
      }
      
-     .nav button:hover {
+     .nav button:hover:not(:disabled) {
         background: hsla(240, 18%, 77%, .5);
+     }
+     
+     .nav button:disabled {
+        cursor: not-allowed;
      }
      
      .prev {

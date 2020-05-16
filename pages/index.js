@@ -51,12 +51,13 @@ const Home = () => {
             </div>
             <div className="right">
               <img className="person-img" alt={slides[slide].name} src={slides[slide].image} />
+              <div className="nav">
+                <button onClick={handlePrevSlide} className="prev"><img alt="Prev" src="/icon-prev.svg"/></button>
+                <button onClick={handleNextSlide} className="next"><img alt="Next" src="/icon-next.svg"/></button>
+              </div>
             </div>
           </div>
-          <div className="nav">
-            <button onClick={handlePrevSlide} className="prev"><img alt="Prev" src="/icon-prev.svg"/></button>
-            <button onClick={handleNextSlide} className="next"><img alt="Next" src="/icon-next.svg"/></button>
-          </div>
+
         </div>
 
       </main>
@@ -155,8 +156,8 @@ const Home = () => {
      
      .nav {
        position: absolute;
-       bottom: 30px;
-       left: 722px;
+       bottom: -25px;
+       left: 60px;
      }
      
      .nav button {
@@ -187,7 +188,7 @@ const Home = () => {
      
     
 
-      @media (max-width: 600px) {
+      @media (max-width: 425px) {
         .grid {
           width: 100%;
           flex-direction: column;
